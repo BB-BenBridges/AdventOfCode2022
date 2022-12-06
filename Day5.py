@@ -517,6 +517,7 @@ moves = []
 
 from copy import deepcopy
 
+#parse input
 fill = crates
 for line in input.splitlines():
     if line == '':
@@ -535,18 +536,19 @@ for line in crates[-2::-1]:
                 stacks[n].append(crate_ltr)
 part2_stacks = deepcopy(stacks)
 
+#p1
 for row in moves:
     #move 11 from 1 to 4
     a, NUM, b, FROM, c, TO = row.split()
     for n in range(int(NUM)):
         stacks[int(TO)].append(stacks[int(FROM)].pop())
 
-tops = ''
+TOPS_P1 = ''
 for n in range(1,10):
-    tops += stacks[n][-1]
-print(tops)
+    TOPS_P1 += stacks[n][-1]
+print(TOPS_P1)
 
-
+#p2
 for row in moves:
     #move 11 from 1 to 4
     a, NUM, b, FROM, c, TO = row.split()
@@ -555,7 +557,7 @@ for row in moves:
         workingArr.insert(0, part2_stacks[int(FROM)].pop())
     part2_stacks[int(TO)].extend(workingArr)
 
-tops = ''
+TOPS_P2 = ''
 for n in range(1,10):
-    tops += part2_stacks[n][-1]
-print(tops)
+    TOPS_P2 += part2_stacks[n][-1]
+print(TOPS_P2)
