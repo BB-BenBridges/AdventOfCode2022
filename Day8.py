@@ -96,7 +96,8 @@ input="""42241133331505045044450145600615260443403016203117403454631321241306415
 432104214000502220335210425065146005665654103051026263133225256657056240121322550016364521150122103
 332404122054310030151030160563463316530321605552450671743053414206243570221133250300024131523313231
 110134030400213335406643022100613224612700424360067652140374413333643266103445350022401501023352131
-231424301543353234613653325560166326262063626431047044000133041410622363320013444135310231215142114"""
+231424301543353234613653325560166326262063626431047044000133041410622363320013444135310231215142114
+"""
 
 rows=input.split()
 trees=[]
@@ -107,24 +108,29 @@ VISIBLE_COUNT = 0
 for y in range(1,len(trees)-1):
     for x in range(1,len(trees[y])-1):
         HEIGHT = trees[y][x]
-        VISIBLE = 0
+        VISIBLE = [0, 0, 0, 0]
         for i in range(x+1,len(trees[y])):
             if trees[y][i] >= HEIGHT:
-                VISIBLE += 1
-        for i in range(x-1,0,-1):
+                VISIBLE[0] = 1
+                break
+        for i in range(x-1,-1,-1):
             if trees[y][i] >= HEIGHT:
-                VISIBLE += 1
+                VISIBLE[1] = 1
+                break
         for i in range(y+1,len(trees)):
             if trees[i][x] >= HEIGHT:
-                VISIBLE += 1
-        for i in range(y-1,0,-1):
+                VISIBLE[2] = 1
+                break
+        for i in range(y-1,-1,-1):
             if trees[i][x] >= HEIGHT:
-                VISIBLE += 1
-        if VISIBLE < 4:
-            VISIBLE_COUNT += 1
+                VISIBLE[3] = 1
+                break
+        TOTAL = 0
+        for val in VISIBLE:
+            if val == 0:
+                VISIBLE_COUNT += 1
+                break
 
 TOP_BOT = len(trees)*2
 LEFT_RIGHT = (len(trees[0])-2)*2
-print(TOP_BOT)
-print(LEFT_RIGHT)
 print(VISIBLE_COUNT+TOP_BOT+LEFT_RIGHT)
