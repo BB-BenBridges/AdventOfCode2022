@@ -134,3 +134,46 @@ for y in range(1,len(trees)-1):
 TOP_BOT = len(trees)*2
 LEFT_RIGHT = (len(trees[0])-2)*2
 print(VISIBLE_COUNT+TOP_BOT+LEFT_RIGHT)
+
+# Part 2
+MAX_SCENIC = 0
+for y in range(0,len(trees)):
+    for x in range(0,len(trees[y])):
+        HEIGHT = trees[y][x]
+        VISIBLE = [0, 0, 0, 0]
+        SCENIC=0
+
+        for i in range(x+1,len(trees[y])):
+            if trees[y][i] >= HEIGHT:
+                VISIBLE[0] +=1
+                break
+            else:
+                VISIBLE[0]+=1
+
+        for i in range(x-1,-1,-1):
+            if trees[y][i] >= HEIGHT:
+                VISIBLE[1] +=1
+                break
+            else:
+                VISIBLE[1] +=1
+
+
+        for i in range(y+1,len(trees)):
+            if trees[i][x] >= HEIGHT:
+                VISIBLE[2] += 1
+                break
+            else:
+                VISIBLE[2]+=1
+
+        for i in range(y-1,-1,-1):
+            if trees[i][x] >= HEIGHT:
+                VISIBLE[3] += 1
+                break
+            else:
+                VISIBLE[3]+=1
+
+        SCENIC = VISIBLE[0] * VISIBLE[1] * VISIBLE[2] * VISIBLE[3]
+        if SCENIC > MAX_SCENIC:
+            MAX_SCENIC = SCENIC
+
+print(MAX_SCENIC)
