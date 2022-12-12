@@ -147,6 +147,8 @@ noop"""
 
 cmds = input.split("\n")
 checks = [20, 60, 100, 140, 180, 220]
+newRows = [39, 79, 119, 159, 199]
+crt = ["."] * 240
 
 cycle = 0
 register = 1
@@ -156,19 +158,36 @@ def checkCycle(cyc, chks, reg, pos):
     global Total
     if cyc in chks:
         var = reg*cyc
-        print("Cycle: " + str(cyc) + " Register: " + str(var) + "pos:" + str(pos))
+        # print("Cycle: " + str(cyc) + " Register: " + str(var) + "pos:" + str(pos))
         Total += int(var)
 
+def calcPixel():
+    global register
+    global cycle
+    global crt
+    if (cycle-1)%40 == register or (cycle-1)%40 == register + 1 or (cycle-1)%40 == register - 1:
+        crt[cycle-1] = "#"
+
+calcPixel()
 for data in cmds:
     cmd = data.split(" ")
     if cmd[0] == "noop":
         cycle += 1
         checkCycle(cycle, checks, register, 2)
+        calcPixel()
 
     if cmd[0] == "addx":
         cycle += 1
         checkCycle(cycle, checks, register, 3)
+        calcPixel()
         cycle += 1
         checkCycle(cycle, checks, register, 4)
+        calcPixel()
         register += int(cmd[1])
 print(Total)
+
+for i in range(0, len(crt)):
+    if i in newRows:
+        print(crt[i])
+    else:
+        print(crt[i], end="")
